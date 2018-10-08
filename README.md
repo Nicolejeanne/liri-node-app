@@ -17,11 +17,11 @@ I am currently a student in the UT Austin Coding Bootcamp. after spending a few 
 
     * Add the following to it, replacing the values with your Spotify API keys (no quotes) once you have them:
 
-        #### Spotify API keys
+            #### Spotify API keys
 
-        SPOTIFY_ID=your-spotify-id
+            SPOTIFY_ID=your-spotify-id
 
-        SPOTIFY_SECRET=your-spotify-secret
+            SPOTIFY_SECRET=your-spotify-secret
 
     * These keys can be found by signing up as a developer on Spotify. Here is how you do that:
 
