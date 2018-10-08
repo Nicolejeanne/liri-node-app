@@ -17,9 +17,10 @@ I am currently a student in the UT Austin Coding Bootcamp. after spending a few 
 
     * Add the following to it, replacing the values with your Spotify API keys (no quotes) once you have them:
 
-        # Spotify API keys
+        #### Spotify API keys
 
         SPOTIFY_ID=your-spotify-id
+
         SPOTIFY_SECRET=your-spotify-secret
 
     * These keys can be found by signing up as a developer on Spotify. Here is how you do that:
@@ -32,19 +33,19 @@ I am currently a student in the UT Austin Coding Bootcamp. after spending a few 
 
         * Step Four: On the next screen, scroll down to where you see your client id and client secret. Copy these values into your `.env` file.
 
-    3. You will also need a few Node packages for this all to work. From the root folder for this app in your command line, install the following:
+3. You will also need a few Node packages for this all to work. From the root folder for this app in your command line, install the following:
 
-        * Node-Spotify-API
-            * Type `npm install node-spotify-api` into your command line. Allow it to finish installing then move on to the next...
+    * Node-Spotify-API
+        * Type `npm install node-spotify-api` into your command line. Allow it to finish installing then move on to the next...
 
-        * Request
-            * Type `npm install request` into your command line. Allow it to finish installing then move on to the next...
+    * Request
+        * Type `npm install request` into your command line. Allow it to finish installing then move on to the next...
 
-        * Moment
-            * Type `npm install moment` into your command line. Allow it to finish installing then move on to the next...
+    * Moment
+        * Type `npm install moment` into your command line. Allow it to finish installing then move on to the next...
 
-        * DotEnv
-            * Type `npm install dotenv` into your command line. Allow it to finish installing then...you're finished!
+    * DotEnv
+        * Type `npm install dotenv` into your command line. Allow it to finish installing then...you're finished!
 
 ### Using this app
 
@@ -92,8 +93,8 @@ I am currently a student in the UT Austin Coding Bootcamp. after spending a few 
         * Plot of the movie.
         * Actors in the movie.
 
-    4. Do what it says
+4. Do what it says
 
-        * Type this into your command line and try it out:
+    * Type this into your command line and try it out:
 
-            `node liri.js do-what-it-says`
+        `node liri.js do-what-it-says`
