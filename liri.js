@@ -11,24 +11,43 @@ require("dotenv").config();
 let userCommand = process.argv[2];
 
 // Create variable for user query
-let userQuery = process.argv[3];
+let userQuery = process.argv.slice(3).join(" ");
 
-// Bands In Town
-let request = require('request');
-// Send Bands In Town Request
-request('https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp', function (error, response, body) {
-  console.log('error:', error); // Print the error if one occurred
-  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-  console.log('body:', body); // Print the HTML.
-});
+// Start of Bands In Town Section
+let bandsInTownQuery = function (bandQuery) {
+
+    // Load request npm package
+    let requestBand = require('request');
+
+    // Load moment package
+    let moment = require('moment');
+
+    // If userQuery is blank, display default of Mr. Nobody
+    if (bandQuery === "") {
+        console.log("Please choose a band or artist!");
+    }
+    // Send Bands In Town Request
+    requestBand('https://rest.bandsintown.com/artists/' + bandQuery + '/events?app_id=codingbootcamp', function (error, response, body) {
+        if (error) {
+            console.log('error:', error); // Print the error if one occurred
+        } else if (!error && response.statusCode === 200) {
+            let bandResult = JSON.parse(body)[0];
+            console.log(`You can see ${bandQuery} here...`);
+            console.log('Name of Venue: ' + bandResult.venue.name);
+            console.log('Venue location: ' + bandResult.venue.city);
+            console.log('Date of Event: ' + moment(bandResult.datetime).format("MM/DD/YYYY"));
+        }
+    });
+}
+// End of Bands In Town Section
 
 // Take in `concert-this` command
 // `node liri.js concert-this <artist/band name here>`
 // "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp"
 // Renders 
-    // Name of venue
-    // venue location
-    // Date of event(use moment to format "MM/DD/YYYY")
+// Name of venue
+// venue location
+// Date of event(use moment to format "MM/DD/YYYY")
 
 // Spotify
 
@@ -36,14 +55,14 @@ request('https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codin
 // `node liri.js spotify-this-song '<song name here>'`
 // https://www.npmjs.com/package/node-spotify-api
 // Renders 
-    // Artist(s), 
-    // The song's name
-    // Preview link of the song from Spotify 
-    // The album that the song is from.
+// Artist(s), 
+// The song's name
+// Preview link of the song from Spotify 
+// The album that the song is from.
 // If no song is provided then your program will default to "The Sign" by Ace of Base.
 
 // Start of OMDB Section
-let omdbQuery = function(movieQuery) {
+let omdbQuery = function (movieQuery) {
 
     // Load request npm package
     let requestMovie = require("request");
@@ -53,60 +72,49 @@ let omdbQuery = function(movieQuery) {
         movieQuery = "mr.nobody";
     }
 
-// OMDB request
-requestMovie("http://www.omdbapi.com/?t=" + movieQuery + "&y=&plot=short&r=json&apikey=trilogy", function(error, response, body) {
-  if (error) {
-      console.log('error:', error); // Print the error if one occurred
-  } else if (!error && response.statusCode === 200) { 
-    console.log('Title of the movie: ' + JSON.parse(body).Title);
-    console.log('Year the movie came out: ' + JSON.parse(body).Year);
-    console.log('IMDB Rating of the movie: ' + JSON.parse(body).imdbRating);
-    console.log('Country where the movie was produced: ' + JSON.parse(body).Country);
-    console.log('Language of the movie: ' + JSON.parse(body).Language);
-    console.log('Plot of the movie: ' + JSON.parse(body).Plot);
-    console.log('Actors in the movie: ' + JSON.parse(body).Actors);
+    // OMDB request
+    requestMovie("http://www.omdbapi.com/?t=" + movieQuery + "&y=&plot=short&r=json&apikey=trilogy", function (error, response, body) {
+        if (error) {
+            console.log('error:', error); // Print the error if one occurred
+        } else if (!error && response.statusCode === 200) {
+            let movieResult = JSON.parse(body);
+            console.log('Title of the movie: ' + movieResult.Title);
+            console.log('Year the movie came out: ' + movieResult.Year);
+            console.log('IMDB Rating of the movie: ' + movieResult.imdbRating);
+            console.log('Country where the movie was produced: ' + movieResult.Country);
+            console.log('Language of the movie: ' + movieResult.Language);
+            console.log('Plot of the movie: ' + movieResult.Plot);
+            console.log('Actors in the movie: ' + movieResult.Actors);
 
-    // Loop through ratings array for Rotten Tomatoes Rating
-    for ( let i = 0; i<JSON.parse(body).Ratings.length; i++) {
-        if (JSON.parse(body).Ratings[i].Source === "Rotten Tomatoes") {
-            console.log('Rotten Tomatoes Rating of the movie: ' + JSON.parse(body).Ratings[i].Value);
-        };
-    } 
-}
-});
+            // Loop through 'Ratings' array for Rotten Tomatoes Rating
+            for (let i = 0; i < movieResult.Ratings.length; i++) {
+                if (movieResult.Ratings[i].Source === "Rotten Tomatoes") {
+                    console.log('Rotten Tomatoes Rating of the movie: ' + movieResult.Ratings[i].Value);
+                };
+            }
+        }
+    });
 }
 // End of OMDB Section
 
-// Take in `movie-this` command
-// `node liri.js movie-this '<movie name here>'`
-// Renders 
-    // * Title of the movie.
-    // * Year the movie came out.
-    // * IMDB Rating of the movie.
-    // * Rotten Tomatoes Rating of the movie.
-    // * Country where the movie was produced.
-    // * Language of the movie.
-    // * Plot of the movie.
-    // * Actors in the movie.
-// If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
-// Use API key trilogy
 
 // Take in `do-what-it-says` command
 // Using the `fs` Node package, LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands.
-    // It should run `spotify-this-song` for "I Want it That Way," as follows the text in `random.txt`.
-    // Edit the text in random.txt to test out the feature for movie-this and my-tweets
+// It should run `spotify-this-song` for "I Want it That Way," as follows the text in `random.txt`.
+// Edit the text in random.txt to test out the feature for movie-this and my-tweets
 
 // BONUS
 // In addition to logging the data to your terminal/bash window, output the data to a .txt file called `log.txt`.
 // Make sure you append each command you run to the `log.txt` file.
 
 // App direction from user input
- if (userCommand === "concert-this") {
-     bandQuery(userQuery);
- } else if (userCommand === "spotify-this-song") {
+
+if (userCommand === "concert-this") {
+    bandsInTownQuery(userQuery);
+} else if (userCommand === "spotify-this-song") {
     spotifyQuery(userQuery);
- } else if (userCommand === "movie-this") {
-     omdbQuery(userQuery);
- } else {
-     console.log("Please enter a command!")
- };
+} else if (userCommand === "movie-this") {
+    omdbQuery(userQuery);
+} else {
+    console.log("Please enter a command!")
+};
