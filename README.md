@@ -45,7 +45,10 @@ I am currently a student in the UT Austin Coding Bootcamp. after spending a few 
         * Type `npm install moment` into your command line. Allow it to finish installing then move on to the next...
 
     * DotEnv
-        * Type `npm install dotenv` into your command line. Allow it to finish installing then...you're finished!
+        * Type `npm install dotenv` into your command line. Allow it to finish installing then move on to the next...
+
+    * Chalk
+        * Type `npm install chalk` into your command line. Allow it to finish installing then...you're finished!
 
 ### Using this app
 

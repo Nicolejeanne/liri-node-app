@@ -1,11 +1,14 @@
 // Code to read and set any enviroment variables
 require("dotenv").config();
 
+// Loads chalk package
+let chalk = require('chalk');
+
 // Import key.js file and store as a variable
 // let keys = require("keys.js");
 
 // Access Spotify keys
-// var spotify = new Spotify(keys.spotify);
+// let spotify = new Spotify(keys.spotify);
 
 // Create variable for user command
 let userCommand = process.argv[2];
@@ -31,25 +34,20 @@ let bandsInTownQuery = function (bandQuery) {
         if (error) {
             console.log('error:', error); // Print the error if one occurred
         } else if (!error && response.statusCode === 200) {
-            let bandResult = JSON.parse(body)[0];
-            console.log(`You can see ${bandQuery} here...`);
-            console.log('Name of Venue: ' + bandResult.venue.name);
-            console.log('Venue location: ' + bandResult.venue.city);
-            console.log('Date of Event: ' + moment(bandResult.datetime).format("MM/DD/YYYY"));
+            let bandResult;
+            for (i = 0; i < 5; i++) {
+                bandResult = JSON.parse(body)[i];
+                console.log(chalk.white.bold(`You can see ${bandQuery} here...`));
+                console.log(chalk.red.bold('Name of Venue: ' + bandResult.venue.name));
+                console.log(chalk.red.bold('Venue location: ' + bandResult.venue.city));
+                console.log(chalk.red.bold('Date of Event: ' + moment(bandResult.datetime).format("MM/DD/YYYY")));
+            }
         }
     });
 }
 // End of Bands In Town Section
 
-// Take in `concert-this` command
-// `node liri.js concert-this <artist/band name here>`
-// "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp"
-// Renders 
-// Name of venue
-// venue location
-// Date of event(use moment to format "MM/DD/YYYY")
-
-// Spotify
+// Start of Spotify Section
 
 // Take in `spotify-this-song` command
 // `node liri.js spotify-this-song '<song name here>'`
@@ -60,6 +58,8 @@ let bandsInTownQuery = function (bandQuery) {
 // Preview link of the song from Spotify 
 // The album that the song is from.
 // If no song is provided then your program will default to "The Sign" by Ace of Base.
+
+// End of Spotify Section
 
 // Start of OMDB Section
 let omdbQuery = function (movieQuery) {
@@ -78,13 +78,13 @@ let omdbQuery = function (movieQuery) {
             console.log('error:', error); // Print the error if one occurred
         } else if (!error && response.statusCode === 200) {
             let movieResult = JSON.parse(body);
-            console.log('Title of the movie: ' + movieResult.Title);
-            console.log('Year the movie came out: ' + movieResult.Year);
-            console.log('IMDB Rating of the movie: ' + movieResult.imdbRating);
-            console.log('Country where the movie was produced: ' + movieResult.Country);
-            console.log('Language of the movie: ' + movieResult.Language);
-            console.log('Plot of the movie: ' + movieResult.Plot);
-            console.log('Actors in the movie: ' + movieResult.Actors);
+            console.log(chalk.cyan.bold('Movie Title: ' + chalk.white.bold(movieResult.Title)));
+            console.log(chalk.cyan.bold('Year released: ' + chalk.white.bold(movieResult.Year)));
+            console.log(chalk.cyan.bold('IMDB Rating: ' + chalk.white.bold(movieResult.imdbRating)));
+            console.log(chalk.cyan.bold('Country produced: ' + chalk.white.bold(movieResult.Country)));
+            console.log(chalk.cyan.bold('Language: ' + chalk.white.bold(movieResult.Language)));
+            console.log(chalk.cyan.bold('Plot: ' + chalk.white.bold(movieResult.Plot)));
+            console.log(chalk.cyan.bold('Actors: ' + chalk.white.bold(movieResult.Actors)));
 
             // Loop through 'Ratings' array for Rotten Tomatoes Rating
             for (let i = 0; i < movieResult.Ratings.length; i++) {
@@ -108,13 +108,30 @@ let omdbQuery = function (movieQuery) {
 // Make sure you append each command you run to the `log.txt` file.
 
 // App direction from user input
-
 if (userCommand === "concert-this") {
     bandsInTownQuery(userQuery);
 } else if (userCommand === "spotify-this-song") {
     spotifyQuery(userQuery);
 } else if (userCommand === "movie-this") {
     omdbQuery(userQuery);
+} else if (userCommand === "do-what-it-says") {
+    // Loads fs package
+    let fs = require("fs");
+    // Reads .txt file, splits at comma, assigns command and query to file components
+    fs.readFile("random.txt", "utf-8", function (error, data) {
+        let args = data.split(",");
+        userCommand = args[0];
+        userQuery = args[1];
+
+        // Decides which function to run
+        if (userCommand === "concert-this") {
+            bandsInTownQuery(userQuery);
+        } else if (userCommand === "spotify-this-song") {
+            spotifyQuery(userQuery);
+        } else if (userCommand === "movie-this") {
+            omdbQuery(userQuery);
+        } else { console.log("File not recongnized. Please try again.") };
+    });
 } else {
     console.log("Please enter a command!")
 };
