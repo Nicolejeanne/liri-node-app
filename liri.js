@@ -4,12 +4,6 @@ require("dotenv").config();
 // Loads chalk package
 let chalk = require('chalk');
 
-// Import key.js file and store as a variable
-// let keys = require("keys.js");
-
-// Access Spotify keys
-// let spotify = new Spotify(keys.spotify);
-
 // Create variable for user command
 let userCommand = process.argv[2];
 
@@ -37,10 +31,10 @@ let bandsInTownQuery = function (bandQuery) {
             let bandResult;
             for (i = 0; i < 5; i++) {
                 bandResult = JSON.parse(body)[i];
-                console.log(chalk.white.bold(`You can see ${bandQuery} here...`));
-                console.log(chalk.red.bold('Name of Venue: ' + bandResult.venue.name));
-                console.log(chalk.red.bold('Venue location: ' + bandResult.venue.city));
-                console.log(chalk.red.bold('Date of Event: ' + moment(bandResult.datetime).format("MM/DD/YYYY")));
+                console.log(chalk.white.bold('You can see ' + bandQuery + ' here...')); // Lead in statement
+                console.log(chalk.red.bold('Name of Venue: ' + bandResult.venue.name)); // Name of the venue
+                console.log(chalk.red.bold('Venue location: ' + bandResult.venue.city)); // Venue location
+                console.log(chalk.red.bold('Date of Event: ' + moment(bandResult.datetime).format("MM/DD/YYYY"))); // Date of the Event (use moment to format this as "MM/DD/YYYY")
             }
         }
     });
@@ -48,17 +42,30 @@ let bandsInTownQuery = function (bandQuery) {
 // End of Bands In Town Section
 
 // Start of Spotify Section
+let spotifyQuery = function (songQuery) {
+    // Load Spotify package
+    let Spotify = require('node-spotify-api');
 
-// Take in `spotify-this-song` command
-// `node liri.js spotify-this-song '<song name here>'`
-// https://www.npmjs.com/package/node-spotify-api
-// Renders 
-// Artist(s), 
-// The song's name
-// Preview link of the song from Spotify 
-// The album that the song is from.
-// If no song is provided then your program will default to "The Sign" by Ace of Base.
+    // Import key.js file and store as a variable
+    let keys = require("keys.js");
 
+    // Access Spotify keys
+    let spotify = new Spotify(keys.spotify);
+
+    // Search
+    spotify.search({ type: 'track', query: songQuery, limit: 5 }, function (error, data) {
+        if (error) {
+            console.log("Error occured: " + error); // Print the error if one occurred
+        } else if (!error && response.statusCode === 200) {
+            console.log("Artist: " + data.tracks.items.name); // Artist(s)
+            console.log("Song: " + data.tracks.items); // The song's name
+            console.log("Spotify link: " + data.tracks.preview_url); // Preview link of the song from Spotify
+            console.log("Album: " + data.tracks.album.name); // The album that the song is from
+        } else {
+            songQuery = "the sign ace of base"
+        }
+    });
+}
 // End of Spotify Section
 
 // Start of OMDB Section
@@ -78,30 +85,24 @@ let omdbQuery = function (movieQuery) {
             console.log('error:', error); // Print the error if one occurred
         } else if (!error && response.statusCode === 200) {
             let movieResult = JSON.parse(body);
-            console.log(chalk.cyan.bold('Movie Title: ' + chalk.white.bold(movieResult.Title)));
-            console.log(chalk.cyan.bold('Year released: ' + chalk.white.bold(movieResult.Year)));
-            console.log(chalk.cyan.bold('IMDB Rating: ' + chalk.white.bold(movieResult.imdbRating)));
-            console.log(chalk.cyan.bold('Country produced: ' + chalk.white.bold(movieResult.Country)));
-            console.log(chalk.cyan.bold('Language: ' + chalk.white.bold(movieResult.Language)));
-            console.log(chalk.cyan.bold('Plot: ' + chalk.white.bold(movieResult.Plot)));
-            console.log(chalk.cyan.bold('Actors: ' + chalk.white.bold(movieResult.Actors)));
+            console.log(chalk.cyan.bold('Movie Title: ' + chalk.white.bold(movieResult.Title))); // Title of the movie
+            console.log(chalk.cyan.bold('Year released: ' + chalk.white.bold(movieResult.Year))); // Year the movie came out
+            console.log(chalk.cyan.bold('IMDB Rating: ' + chalk.white.bold(movieResult.imdbRating))); // IMDB Rating of the movie
+            console.log(chalk.cyan.bold('Country produced: ' + chalk.white.bold(movieResult.Country))); // Country where the movie was produced
+            console.log(chalk.cyan.bold('Language: ' + chalk.white.bold(movieResult.Language))); // Language of the movie
+            console.log(chalk.cyan.bold('Plot: ' + chalk.white.bold(movieResult.Plot))); // Plot of the movie
+            console.log(chalk.cyan.bold('Actors: ' + chalk.white.bold(movieResult.Actors))); // Actors in the movie
 
             // Loop through 'Ratings' array for Rotten Tomatoes Rating
             for (let i = 0; i < movieResult.Ratings.length; i++) {
                 if (movieResult.Ratings[i].Source === "Rotten Tomatoes") {
-                    console.log('Rotten Tomatoes Rating of the movie: ' + movieResult.Ratings[i].Value);
+                    console.log('Rotten Tomatoes Rating of the movie: ' + movieResult.Ratings[i].Value); // Rotten Tomatoes Rating of the movie
                 };
             }
         }
     });
 }
 // End of OMDB Section
-
-
-// Take in `do-what-it-says` command
-// Using the `fs` Node package, LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands.
-// It should run `spotify-this-song` for "I Want it That Way," as follows the text in `random.txt`.
-// Edit the text in random.txt to test out the feature for movie-this and my-tweets
 
 // BONUS
 // In addition to logging the data to your terminal/bash window, output the data to a .txt file called `log.txt`.
@@ -115,6 +116,7 @@ if (userCommand === "concert-this") {
 } else if (userCommand === "movie-this") {
     omdbQuery(userQuery);
 } else if (userCommand === "do-what-it-says") {
+    // Start do-what-it-says functionality
     // Loads fs package
     let fs = require("fs");
     // Reads .txt file, splits at comma, assigns command and query to file components
@@ -132,6 +134,7 @@ if (userCommand === "concert-this") {
             omdbQuery(userQuery);
         } else { console.log("File not recongnized. Please try again.") };
     });
+    // End do-what-it-says
 } else {
     console.log("Please enter a command!")
 };
