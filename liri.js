@@ -4,6 +4,24 @@ require("dotenv").config();
 // Loads chalk package
 let chalk = require('chalk');
 
+// Load request npm package
+let requestMovie = require("request");
+
+// Load request npm package
+let requestBand = require('request');
+
+// Load moment package
+let moment = require('moment');
+
+// Load Spotify package
+let Spotify = require('node-spotify-api');
+
+// Import key.js file and store as a variable
+let keys = require("./keys.js");
+
+// Access Spotify keys
+let spotify = new Spotify(keys.spotify);
+
 // Create variable for user command
 let userCommand = process.argv[2];
 
@@ -12,12 +30,6 @@ let userQuery = process.argv.slice(3).join(" ");
 
 // Start of Bands In Town Section
 let bandsInTownQuery = function (bandQuery) {
-
-    // Load request npm package
-    let requestBand = require('request');
-
-    // Load moment package
-    let moment = require('moment');
 
     // If userQuery is blank, display default of Mr. Nobody
     if (bandQuery === "") {
@@ -43,20 +55,12 @@ let bandsInTownQuery = function (bandQuery) {
 
 // Start of Spotify Section
 let spotifyQuery = function (songQuery) {
-    // Load Spotify package
-    let Spotify = require('node-spotify-api');
-
-    // Import key.js file and store as a variable
-    let keys = require("keys.js");
-
-    // Access Spotify keys
-    let spotify = new Spotify(keys.spotify);
 
     // Search
     spotify.search({ type: 'track', query: songQuery, limit: 5 }, function (error, data) {
         if (error) {
             console.log("Error occured: " + error); // Print the error if one occurred
-        } else if (!error && response.statusCode === 200) {
+        } else if (!error) {
             console.log("Artist: " + data.tracks.items.name); // Artist(s)
             console.log("Song: " + data.tracks.items); // The song's name
             console.log("Spotify link: " + data.tracks.preview_url); // Preview link of the song from Spotify
@@ -70,9 +74,6 @@ let spotifyQuery = function (songQuery) {
 
 // Start of OMDB Section
 let omdbQuery = function (movieQuery) {
-
-    // Load request npm package
-    let requestMovie = require("request");
 
     // If userQuery is blank, display default of Mr. Nobody
     if (movieQuery === "") {
@@ -96,7 +97,7 @@ let omdbQuery = function (movieQuery) {
             // Loop through 'Ratings' array for Rotten Tomatoes Rating
             for (let i = 0; i < movieResult.Ratings.length; i++) {
                 if (movieResult.Ratings[i].Source === "Rotten Tomatoes") {
-                    console.log('Rotten Tomatoes Rating of the movie: ' + movieResult.Ratings[i].Value); // Rotten Tomatoes Rating of the movie
+                    console.log(chalk.cyan.bold('Rotten Tomatoes Rating of the movie: ' + chalk.white.bold(movieResult.Ratings[i].Value))); // Rotten Tomatoes Rating of the movie
                 };
             }
         }
