@@ -80,8 +80,12 @@ I am currently a student in the UT Austin Coding Bootcamp. after spending a few 
         
         * Artist(s)
         * The song's name
-        * A preview link of the song from Spotify
         * The album that the song is from
+        * A preview link of the song from Spotify
+
+        Here is how it will look:
+
+    ![Image of spotify-this-song command](/images/spotify.png)
 
 3. OMDB
 
@@ -100,8 +104,16 @@ I am currently a student in the UT Austin Coding Bootcamp. after spending a few 
         * Plot of the movie.
         * Actors in the movie.
 
+         Here is how it will look:
+
+    ![Image of movie-this command](/images/movie.png)
+
 4. Do what it says
 
     * Type this into your command line and try it out:
 
         `node liri.js do-what-it-says`
+
+        Here is how it will look:
+
+    ![Image of do-what-it-says command](/images/DoIt.png)
