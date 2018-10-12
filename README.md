@@ -52,7 +52,9 @@ I am currently a student in the UT Austin Coding Bootcamp. after spending a few 
 
 ### Using this app
 
-* This app has four sets of commands that allow you to query different APIs.
+* This app has four sets of commands that allow you to query different APIs. Here's a video of the app in use:
+
+![Demo] (https://drive.google.com/file/d/119NIRRdSoCwe8DkiQ8eC0XD4Z9paYuQk/view)
 
 1. Bands In Town
 
@@ -60,7 +62,7 @@ I am currently a student in the UT Austin Coding Bootcamp. after spending a few 
         
         `node liri.js concert-this <artist/band name here>`
     
-    * The app will then give you the following information:
+    * The app will then give you the following information for five concerts:
         
         * Name of the venue
         * Venue location
