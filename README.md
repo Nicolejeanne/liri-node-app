@@ -3,11 +3,7 @@
 
 I am currently a student in the UT Austin Coding Bootcamp. after spending a few months on client-side development, we are beginning to learn about the back-end. Our week 12 assignment is to create a command line node app that takes in certain parameters and gives back data. It's called LIRI, Language Interpretation and Regognition Interface...a play on SIRI.
 
-### Here is a link to a video demo
-
-* [Link to LIRI app] 
-
-### Setup: To use this app
+### Setup
 
 1. You will need to clone this repository.
 
@@ -60,11 +56,15 @@ I am currently a student in the UT Austin Coding Bootcamp. after spending a few 
         
         `node liri.js concert-this <artist/band name here>`
     
-    * The app will then give you the following information:
+    * The app will then give you the following information for five concerts:
         
         * Name of the venue
         * Venue location
         * Date of the Event
+        
+       Here is how it will look:
+
+    ![Image of concert-this command](/images/concert.png)
 
 2. Spotify
 
@@ -76,8 +76,12 @@ I am currently a student in the UT Austin Coding Bootcamp. after spending a few 
         
         * Artist(s)
         * The song's name
-        * A preview link of the song from Spotify
         * The album that the song is from
+        * A preview link of the song from Spotify
+
+        Here is how it will look:
+
+    ![Image of spotify-this-song command](/images/spotify.png)
 
 3. OMDB
 
@@ -96,8 +100,16 @@ I am currently a student in the UT Austin Coding Bootcamp. after spending a few 
         * Plot of the movie.
         * Actors in the movie.
 
+         Here is how it will look:
+
+    ![Image of movie-this command](/images/movie.png)
+
 4. Do what it says
 
     * Type this into your command line and try it out:
 
         `node liri.js do-what-it-says`
+
+        Here is how it will look:
+
+    ![Image of do-what-it-says command](/images/DoIt.png)
