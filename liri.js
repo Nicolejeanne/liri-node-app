@@ -13,6 +13,9 @@ let requestBand = require('request');
 // Load moment package
 let moment = require('moment');
 
+// Loads fs package
+let fs = require("fs");
+
 // Load Spotify package
 let Spotify = require('node-spotify-api');
 
@@ -55,18 +58,20 @@ let bandsInTownQuery = function (bandQuery) {
 
 // Start of Spotify Section
 let spotifyQuery = function (songQuery) {
+     if (songQuery === '') {
+         songQuery = "the sign ace of base";
+     }
 
     // Search
     spotify.search({ type: 'track', query: songQuery, limit: 5 }, function (error, data) {
         if (error) {
             console.log("Error occured: " + error); // Print the error if one occurred
         } else if (!error) {
-            console.log("Artist: " + data.tracks.items.name); // Artist(s)
-            console.log("Song: " + data.tracks.items); // The song's name
-            console.log("Spotify link: " + data.tracks.preview_url); // Preview link of the song from Spotify
-            console.log("Album: " + data.tracks.album.name); // The album that the song is from
-        } else {
-            songQuery = "the sign ace of base"
+            // console.log(data);
+            console.log(chalk.yellow("Artist: " + chalk.bgMagenta(data.tracks.items[0].artists[0].name))); // Artist(s)
+            console.log(chalk.yellow("Song: " + chalk.bgMagenta(data.tracks.items[0].name))); // The song's name
+            console.log(chalk.yellow("Album: " + chalk.bgMagenta(data.tracks.items[0].album.name))); // The album that the song is from
+            console.log(chalk.yellow("Spotify link: " + chalk.bgMagenta(data.tracks.items[0].preview_url))); // Preview link of the song from Spotify
         }
     });
 }
@@ -105,9 +110,6 @@ let omdbQuery = function (movieQuery) {
 }
 // End of OMDB Section
 
-// BONUS
-// In addition to logging the data to your terminal/bash window, output the data to a .txt file called `log.txt`.
-// Make sure you append each command you run to the `log.txt` file.
 
 // App direction from user input
 if (userCommand === "concert-this") {
@@ -118,8 +120,6 @@ if (userCommand === "concert-this") {
     omdbQuery(userQuery);
 } else if (userCommand === "do-what-it-says") {
     // Start do-what-it-says functionality
-    // Loads fs package
-    let fs = require("fs");
     // Reads .txt file, splits at comma, assigns command and query to file components
     fs.readFile("random.txt", "utf-8", function (error, data) {
         let args = data.split(",");
@@ -139,3 +139,4 @@ if (userCommand === "concert-this") {
 } else {
     console.log("Please enter a command!")
 };
+
