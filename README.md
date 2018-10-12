@@ -65,8 +65,9 @@ I am currently a student in the UT Austin Coding Bootcamp. after spending a few 
         * Name of the venue
         * Venue location
         * Date of the Event
+        
+       Here is how it will look:
 
-    Example:
     ![Image of concert-this command](/images/concert.png)
 
 2. Spotify
