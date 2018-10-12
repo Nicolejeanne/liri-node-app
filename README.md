@@ -66,6 +66,9 @@ I am currently a student in the UT Austin Coding Bootcamp. after spending a few 
         * Venue location
         * Date of the Event
 
+    Example:
+    ![Image of concert-this command](/images/concert.png)
+
 2. Spotify
 
     * Allows you to query the 'Spotify API' by typing the following into your command line:
