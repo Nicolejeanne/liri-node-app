@@ -52,9 +52,7 @@ I am currently a student in the UT Austin Coding Bootcamp. after spending a few 
 
 ### Using this app
 
-* This app has four sets of commands that allow you to query different APIs. Here's a video of the app in use:
-
-![Demo] (https://drive.google.com/file/d/119NIRRdSoCwe8DkiQ8eC0XD4Z9paYuQk/view)
+* This app has four sets of commands that allow you to query different APIs.
 
 1. Bands In Town
 
