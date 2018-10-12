@@ -3,11 +3,7 @@
 
 I am currently a student in the UT Austin Coding Bootcamp. after spending a few months on client-side development, we are beginning to learn about the back-end. Our week 12 assignment is to create a command line node app that takes in certain parameters and gives back data. It's called LIRI, Language Interpretation and Regognition Interface...a play on SIRI.
 
-### Here is a link to a video demo
-
-* [Link to LIRI app] 
-
-### Setup: To use this app
+### Setup
 
 1. You will need to clone this repository.
 
